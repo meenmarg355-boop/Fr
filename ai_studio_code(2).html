@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Happy Friendship Day, Nishant Verma! ✨</title>
+  
+  <!-- Google Fonts & Canvas Confetti -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Outfit:wght@600;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #0f0c1b;
+      color: #fff;
+      min-height: 100dvh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    /* Mobile Outer Wrapper */
+    .mobile-app {
+      width: 100%;
+      max-width: 430px;
+      height: 100dvh;
+      background: radial-gradient(circle at 50% 20%, #2a1b4e 0%, #0d0a1a 80%);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 20px 40px;
+      overflow: hidden;
+    }
+
+    /* Floating Ambient Neon Glows */
+    .glow-orb {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    .glow-1 { background: #ff007f; top: -50px; left: -50px; }
+    .glow-2 { background: #7928ca; bottom: -50px; right: -50px; }
+
+    /* Top Bar Header */
+    .app-header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 2;
+    }
+    .badge-tag {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      letter-spacing: 0.5px;
+    }
+
+    /* Center Landing Graphic */
+    .gift-box-wrapper {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      margin: auto 0;
+    }
+
+    .gift-emoji {
+      font-size: 5rem;
+      animation: floatBounce 2.5s infinite ease-in-out;
+      cursor: pointer;
+      display: inline-block;
+      filter: drop-shadow(0 15px 25px rgba(255, 0, 127, 0.4));
+    }
+
+    @keyframes floatBounce {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-15px) rotate(5deg); }
+    }
+
+    .main-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.1rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff 30%, #ff80bf 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-top: 20px;
+      line-height: 1.2;
+    }
+
+    .sub-title {
+      color: #a19bb8;
+      font-size: 0.95rem;
+      margin-top: 10px;
+    }
+
+    /* Main Tap Button */
+    .tap-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #ff007f 0%, #7928ca 100%);
+      border: none;
+      padding: 18px;
+      border-radius: 20px;
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 700;
+      box-shadow: 0 10px 25px rgba(255, 0, 127, 0.35);
+      cursor: pointer;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.1s ease;
+    }
+    .tap-btn:active {
+      transform: scale(0.96);
+    }
+
+    /* POPUP MODAL */
+    .modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(10, 8, 20, 0.85);
+      backdrop-filter: blur(15px);
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      width: 100%;
+      background: #18132b;
+      border-top-left-radius: 32px;
+      border-top-right-radius: 32px;
+      padding: 35px 24px 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      text-align: center;
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+      position: relative;
+    }
+
+    .modal-backdrop.active .modal-card {
+      transform: translateY(0);
+    }
+
+    .close-icon {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 32px;
+      height: 32px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    /* Story Ring Frame */
+    .story-ring-container {
+      position: relative;
+      width: 145px;
+      height: 145px;
+      margin: 0 auto 18px;
+    }
+
+    .story-ring {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      padding: 5px;
+      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      animation: spin 6s linear infinite;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    .friend-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid #18132b;
+    }
+
+    .wish-heading {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.7rem;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+
+    .special-tag {
+      background: rgba(255, 0, 127, 0.15);
+      color: #ff80bf;
+      font-size: 0.85rem;
+      padding: 6px 16px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 18px;
+      border: 1px solid rgba(255, 0, 127, 0.3);
+      font-weight: 600;
+    }
+
+    .wish-desc {
+      font-size: 0.95rem;
+      color: #b3aeca;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    .action-btn-group {
+      display: flex;
+      gap: 12px;
+    }
+
+    .sec-btn {
+      flex: 1;
+      padding: 14px;
+      border-radius: 16px;
+      border: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+    .sec-btn.heart-btn {
+      background: rgba(255, 0, 127, 0.2);
+      color: #ff4d94;
+      border: 1px solid rgba(255, 0, 127, 0.4);
+    }
+    .sec-btn.party-btn {
+      background: linear-gradient(135deg, #ff007f, #7928ca);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mobile Screen Container -->
+  <div class="mobile-app">
+    <div class="glow-orb glow-1"></div>
+    <div class="glow-orb glow-2"></div>
+
+    <!-- App Header -->
+    <div class="app-header">
+      <span class="badge-tag">💌 For Nishant Verma</span>
+      <span class="badge-tag" style="background: rgba(255,0,127,0.2);">Best Friends Forever</span>
+    </div>
+
+    <!-- Center Landing -->
+    <div class="gift-box-wrapper" onclick="openSurprise()">
+      <div class="gift-emoji">🎁</div>
+      <h1 class="main-title">Surprise for Nishant Verma!</h1>
+      <p class="sub-title">Tap the gift or button below to open your card!</p>
+    </div>
+
+    <!-- Main Tap Button -->
+    <button class="tap-btn" onclick="openSurprise()">
+      <span>Open Nishant's Card</span> ✨
+    </button>
+
+    <!-- Pop-Up Modal -->
+    <div class="modal-backdrop" id="modalBackdrop">
+      <div class="modal-card">
+        <div class="close-icon" onclick="closeSurprise()">&times;</div>
+
+        <!-- Nishant's Google Drive Photo -->
+        <div class="story-ring-container">
+          <div class="story-ring">
+            <img 
+              src="https://lh3.googleusercontent.com/d/10HamGl1AnjK4How7ZuzaTDKNoSLFlSur" 
+              alt="Nishant Verma" 
+              class="friend-photo"
+              onerror="this.src='https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=300&q=80'" 
+            />
+          </div>
+        </div>
+
+        <h2 class="wish-heading">Happy Friendship Day, Nishant! ❤️</h2>
+        <div class="special-tag">👑 Best Brother & Friend 👑</div>
+
+        <p class="wish-desc">
+          Nishant, thank you for always having my back, bringing all the good vibes, and being the best friend anyone could ask for! 🍻🔥
+        </p>
+
+        <!-- Action Buttons -->
+        <div class="action-btn-group">
+          <button class="sec-btn heart-btn" onclick="sendHearts()">Send Hearts 💕</button>
+          <button class="sec-btn party-btn" onclick="celebrateMore()">Party! 🎉</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openSurprise() {
+      document.getElementById('modalBackdrop').classList.add('active');
+      triggerHaptic();
+
+      // Confetti Explosion
+      confetti({
+        particleCount: 80,
+        spread: 70,
+        origin: { y: 0.7 }
+      });
+    }
+
+    function closeSurprise() {
+      document.getElementById('modalBackdrop').classList.remove('active');
+      triggerHaptic();
+    }
+
+    function triggerHaptic() {
+      if ('vibrate' in navigator) {
+        navigator.vibrate([40, 30, 40]);
+      }
+    }
+
+    function sendHearts() {
+      triggerHaptic();
+      confetti({
+        particleCount: 50,
+        spread: 60,
+        shapes: ['heart'],
+        colors: ['#ff007f', '#ff4d94', '#ffffff'],
+        origin: { y: 0.8 }
+      });
+    }
+
+    function celebrateMore() {
+      triggerHaptic();
+      confetti({
+        particleCount: 100,
+        spread: 100,
+        origin: { y: 0.8 }
+      });
+    }
+  </script>
+</body>
+</html>
